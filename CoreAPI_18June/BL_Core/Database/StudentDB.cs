@@ -16,6 +16,7 @@ namespace BL_Core.Database
         public StudentDB()
         {
             conn.Open();
+           IHpptHandler 
         }
 
         public List<Student> GetDetail()
@@ -57,7 +58,7 @@ namespace BL_Core.Database
             return i;
         }
 
-        internal int DeleteValues(int id)
+        public int DeleteValues(int id)
         {
             int i = 0;
             string cmdString;

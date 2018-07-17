@@ -41,17 +41,21 @@ namespace MVCApplication.Controllers
         {
             try
             {
-                Student objstudent = new Student();
-                objstudent.Id = int.Parse(collection["Id"]);
-                objstudent.Name = collection["Name"];
-                objstudent.RollNo = int.Parse(collection["RollNo"]);
+                if (ModelState.IsValid)
+                {
+                    Student objstudent = new Student();
+                    objstudent.Id = int.Parse(collection["Id"]);
+                    objstudent.Name = collection["Name"];
+                    objstudent.RollNo = int.Parse(collection["RollNo"]);
 
-                StudentDB objDB = new StudentDB();
-                var students = objDB.InsertValues(objstudent.Id,objstudent.Name,objstudent.RollNo);
+                    StudentDB objDB = new StudentDB();
+                    var students = objDB.InsertValues(objstudent.Id, objstudent.Name, objstudent.RollNo);
 
-                // TODO: Add insert logic here
+                    // TODO: Add insert logic here
 
                     return RedirectToAction(nameof(Index));
+                }
+                else return View();
             }
             catch(Exception ex)
             {
@@ -62,17 +66,31 @@ namespace MVCApplication.Controllers
         // GET: Student/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            StudentDB objDB = new StudentDB();
+            var student = objDB.GetDetail().Where(i => i.Id == id).FirstOrDefault();
+            return View(student);
         }
 
         // POST: Student/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //public ActionResult Edit(int id, string name, int rollNo)
+        public ActionResult Edit(Student student)
         {
             try
             {
                 // TODO: Add update logic here
+                Student objstudent = new Student();
+                objstudent.Id = student.Id; // int.Parse(collection["Id"]);
+                objstudent.Name = student.Name;// name;// collection["Name"];
+                objstudent.RollNo = student.RollNo;// rollNo;// int.Parse(collection["RollNo"]);
+
+                StudentDB objDB = new StudentDB();
+                var students = objDB.InsertValues(objstudent.Id, objstudent.Name, objstudent.RollNo);
+
+                // TODO: Add insert logic here
+                
 
                 return RedirectToAction(nameof(Index));
             }
@@ -85,7 +103,9 @@ namespace MVCApplication.Controllers
         // GET: Student/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            StudentDB objDB = new StudentDB();
+            var students = objDB.DeleteValues(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Student/Delete/5
