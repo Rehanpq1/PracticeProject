@@ -43,7 +43,7 @@ namespace MVCApplication
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Student}/{action=Index}/{id?}");
             });
         }
     }

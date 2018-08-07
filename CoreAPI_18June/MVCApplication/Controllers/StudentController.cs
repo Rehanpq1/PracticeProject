@@ -7,6 +7,7 @@ using BL_Core.Controllers;
 using BL_Core.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MVCApplication.Controllers
 {
@@ -17,7 +18,25 @@ namespace MVCApplication.Controllers
         {
             StudentDB objDB = new StudentDB();
             var students = objDB.GetDetail().OrderBy(i => i.Id);
+            
             return View(students);
+        }
+        public ActionResult SingleDetail()
+        {
+            StudentDB objDB = new StudentDB();
+            var students = objDB.GetDetail().OrderBy(i => i.Id);
+
+            return View(students);
+        }
+
+        public List<SelectListItem> GetAllTeaTypes()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "General Tea", Value = "1" });
+            items.Add(new SelectListItem { Text = "Coffee", Value = "2" });
+            items.Add(new SelectListItem { Text = "Green Tea", Value = "3" });
+            items.Add(new SelectListItem { Text = "Black Tea", Value = "4" });
+            return items;
         }
 
         // GET: Student/Details/5
